@@ -1,256 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DEEBOOK | Gamer Profile</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DEEBOOK | Gamer Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Orbitron', sans-serif;
-      height: 100vh;
-      background: radial-gradient(circle at top, #0f2027, #000);
-      color: #fff;
-      overflow: hidden;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Orbitron',sans-serif;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
 
-    /* Animated background */
-    .bg {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(0,255,255,0.15), rgba(255,0,255,0.15));
-      animation: moveBg 8s infinite alternate;
-      z-index: -1;
-    }
-    @keyframes moveBg {
-      from { filter: hue-rotate(0deg); }
-      to { filter: hue-rotate(90deg); }
-    }
+/* CLICK TO START */
+#startScreen{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#0f2027,#000);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  cursor:pointer;
+}
+#startScreen h1{
+  font-size:3rem;
+  letter-spacing:4px;
+  animation:pulse 1.5s infinite alternate;
+}
 
-    .container {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      gap: 25px;
-    }
+@keyframes pulse{
+  from{opacity:.4}
+  to{opacity:1}
+}
 
-    h1 {
-      font-size: 4rem;
-      letter-spacing: 4px;
-      position: relative;
-    }
+/* BACKGROUND */
+#bg{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(120deg,#0f2027,#000,#2c5364);
+  animation:bgmove 10s infinite alternate;
+  z-index:-2;
+}
+@keyframes bgmove{
+  from{filter:hue-rotate(0deg)}
+  to{filter:hue-rotate(120deg)}
+}
 
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      color: cyan;
-      background: transparent;
-      overflow: hidden;
-      clip-path: inset(0 0 0 0);
-    }
+/* PARTICLES BACKGROUND */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+}
 
-    .glitch::before {
-      animation: glitchTop 2s infinite linear alternate-reverse;
-    }
+/* CONTENT */
+.container{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:25px;
+  text-align:center;
+}
 
-    .glitch::after {
-      color: magenta;
-      animation: glitchBottom 1.5s infinite linear alternate-reverse;
-    }
+/* GLITCH TEXT */
+.glitch{
+  font-size:4rem;
+  position:relative;
+}
+.glitch:before,.glitch:after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;top:0;width:100%;
+}
+.glitch:before{color:cyan;animation:g1 2s infinite}
+.glitch:after{color:magenta;animation:g2 1.5s infinite}
+@keyframes g1{
+  0%{transform:translate(0)}
+  20%{transform:translate(-2px,2px)}
+  40%{transform:translate(-2px,-2px)}
+  60%{transform:translate(2px,2px)}
+  80%{transform:translate(2px,-2px)}
+  100%{transform:translate(0)}
+}
+@keyframes g2{
+  0%{transform:translate(0)}
+  20%{transform:translate(2px,-2px)}
+  40%{transform:translate(2px,2px)}
+  60%{transform:translate(-2px,-2px)}
+  80%{transform:translate(-2px,2px)}
+  100%{transform:translate(0)}
+}
 
-    @keyframes glitchTop {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, -2px); }
-      40% { transform: translate(-2px, 2px); }
-      60% { transform: translate(2px, -1px); }
-      80% { transform: translate(2px, 1px); }
-      100% { transform: translate(0); }
-    }
+/* AVATAR */
+.avatar{position:relative;width:180px;height:180px}
+.avatar img{
+  width:160px;height:160px;border-radius:50%;
+  border:3px solid cyan;box-shadow:0 0 30px cyan;
+  position:absolute;top:10px;left:10px;z-index:2
+}
 
-    @keyframes glitchBottom {
-      0% { transform: translate(0); }
-      20% { transform: translate(2px, 2px); }
-      40% { transform: translate(2px, -2px); }
-      60% { transform: translate(-2px, 1px); }
-      80% { transform: translate(-2px, -1px); }
-      100% { transform: translate(0); }
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px cyan; }
-      to { text-shadow: 0 0 30px magenta; }
-    }
+.avatar span{
+  position:absolute;width:8px;height:8px;
+  background:linear-gradient(45deg,cyan,magenta);
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  animation:orbit 1.5s linear infinite;
+}
+.avatar span:nth-child(1){animation-delay:0s}
+.avatar span:nth-child(2){animation-delay:-.3s}
+.avatar span:nth-child(3){animation-delay:-.6s}
+.avatar span:nth-child(4){animation-delay:-.9s}
+.avatar span:nth-child(5){animation-delay:-1.2s}
+.avatar span:nth-child(6){animation-delay:-1.5s}
 
-    .subtitle {
-      opacity: 0.8;
-      font-size: 1rem;
-    }
+@keyframes orbit{
+  from{transform:rotate(0deg) translateX(85px)}
+  to{transform:rotate(360deg) translateX(85px)}
+}
 
-    .avatar {
-      position: relative;
-      width: 170px;
-      height: 170px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .avatar img {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid cyan;
-      box-shadow: 0 0 25px cyan;
-      z-index: 2;
-      animation: pulse 2s infinite alternate;
-    }
-
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: linear-gradient(45deg, cyan, magenta);
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      box-shadow: 0 0 15px cyan;
-      animation: orbit 2s linear infinite;
-    }
-
-    .particle:nth-child(1) { animation-delay: 0s; }
-    .particle:nth-child(2) { animation-delay: -0.3s; }
-    .particle:nth-child(3) { animation-delay: -0.6s; }
-    .particle:nth-child(4) { animation-delay: -0.9s; }
-    .particle:nth-child(5) { animation-delay: -1.2s; }
-    .particle:nth-child(6) { animation-delay: -1.5s; }
-
-    @keyframes orbit {
-      from { transform: rotate(0deg) translateX(95px) rotate(0deg); }
-      to { transform: rotate(360deg) translateX(95px) rotate(-360deg); }
-    }
-      to { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
-    }
-
-    @keyframes pulse {
-      from { box-shadow: 0 0 15px cyan; }
-      to { box-shadow: 0 0 35px magenta; }
-    }
-
-    .socials {
-      display: flex;
-      gap: 30px;
-      margin-top: 20px;
-    }
-    .socials a {
-      font-size: 2.5rem;
-      color: #fff;
-      transition: 0.3s;
-    }
-    .socials a:hover {
-      transform: scale(1.2);
-      color: cyan;
-      text-shadow: 0 0 15px cyan;
-    }
-
-    /* Music player */
-    .music {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-    }
-    .music button {
-      background: none;
-      border: 2px solid cyan;
-      color: cyan;
-      padding: 12px 18px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      transition: 0.3s;
-    }
-    .music button:hover {
-      background: cyan;
-      color: #000;
-    }
-  </style>
+/* SOCIAL */
+.socials{display:flex;gap:30px}
+.socials a{
+  font-size:2.5rem;color:white;
+  transition:.3s
+}
+.socials a:hover{
+  color:cyan;transform:scale(1.2)
+}
+</style>
 </head>
 <body>
 
-  <div class="bg"></div>
+<div id="startScreen" onclick="startSite()">
+  <h1>CLICK TO START</h1>
+</div>
 
-  <div class="container">
-    <div class="avatar">
-      <span class="particle"></span>
-      <span class="particle"></span>
-      <span class="particle"></span>
-      <span class="particle"></span>
-      <span class="particle"></span>
-      <span class="particle"></span>
-      <img src="avatar.png" alt="DEEBOOK" />
-    </div>
-    <h1 class="glitch" data-text="DEEBOOK">DEEBOOK</h1>
-    <div class="subtitle">GAMER | DIGITAL PROFILE</div>
+<div id="bg"></div>
+<canvas id="particles"></canvas>
 
-    <div class="socials" onmouseover="startMusic()">
-      <a href="https://facebook.com" target="_blank" onclick="playClick()"><i class="fab fa-facebook"></i></a>
-      <a href="#" onclick="copyDiscord(); playClick()"><i class="fab fa-discord"></i></a>
-      <a href="https://steamcommunity.com" target="_blank" onclick="playClick()"><i class="fab fa-steam"></i></a>
-    </div>
+<audio id="bgm" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <div class="avatar">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <img src="avatar.png">
   </div>
 
-  <div class="music">
-    <audio id="bgm" loop>
-      <source src="music.mp3" type="audio/mpeg">
-    </audio>
-    <button onclick="toggleMusic()">▶ MUSIC</button>
+  <div class="glitch" data-text="DEEBOOK">DEEBOOK</div>
+  <div>GAMER | DIGITAL PROFILE</div>
+
+  <div class="socials">
+    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="#" onclick="copyDiscord()"><i class="fab fa-discord"></i></a>
+    <a href="https://steamcommunity.com" target="_blank"><i class="fab fa-steam"></i></a>
   </div>
+</div>
 
-  <script>
-    const bgm = document.getElementById('bgm');
-    let playing = false;
+<script>
+const bgm=document.getElementById('bgm');
+function startSite(){
+  document.getElementById('startScreen').style.display='none';
+  bgm.play();
+}
+function copyDiscord(){
+  navigator.clipboard.writeText('DEEBOOK#0000');
+  alert('Discord ID คัดลอกแล้ว');
+}
 
-    function startMusic() {
-      if (!playing) {
-        bgm.play();
-        playing = true;
-      }
-    }
-
-    function toggleMusic() {
-      if (!playing) {
-        bgm.play();
-        playing = true;
-      } else {
-        bgm.pause();
-        playing = false;
-      }
-    }
-
-    function copyDiscord() {
-      navigator.clipboard.writeText('DEEBOOK#0000');
-      alert('คัดลอก Discord ID แล้ว!');
-    }
-
-    // Mouse trail effect
-    document.addEventListener('mousemove', e => {
-      const dot = document.createElement('div');
-      dot.className = 'mouse-dot';
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-      document.body.appendChild(dot);
-      setTimeout(() => dot.remove(), 500);
-    });
-  </script>
-
+// PARTICLE BACKGROUND
+const c=document.getElementById('particles');
+const ctx=c.getContext('2d');
+let w,h;function resize(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}
+window.onresize=resize;resize();
+let dots=Array.from({length:80},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5),vy:(Math.random()-.5)}));
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(0,255,255,.7)';
+  dots.forEach(d=>{
+    d.x+=d.vx;d.y+=d.vy;
+    if(d.x<0||d.x>w)d.vx*=-1;
+    if(d.y<0||d.y>h)d.vy*=-1;
+    ctx.beginPath();ctx.arc(d.x,d.y,2,0,Math.PI*2);ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
 </body>
 </html>
