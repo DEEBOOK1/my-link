@@ -58,6 +58,21 @@
       font-size: 1rem;
     }
 
+    .avatar img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid cyan;
+      box-shadow: 0 0 25px cyan;
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { box-shadow: 0 0 15px cyan; }
+      to { box-shadow: 0 0 35px magenta; }
+    }
+
     .socials {
       display: flex;
       gap: 30px;
@@ -101,6 +116,9 @@
   <div class="bg"></div>
 
   <div class="container">
+    <div class="avatar">
+      <img src="avatar.png" alt="DEEBOOK" />
+    </div>
     <h1>DEEBOOK</h1>
     <div class="subtitle">GAMER | DIGITAL PROFILE</div>
 
