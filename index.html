@@ -107,10 +107,15 @@ canvas{
 }
 
 .avatar span{
-  position:absolute;width:8px;height:8px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:8px;
+  height:8px;
   background:linear-gradient(45deg,cyan,magenta);
   clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
-  animation:orbit 1.5s linear infinite;
+  animation:orbit 1.2s linear infinite;
+}
 }
 .avatar span:nth-child(1){animation-delay:0s}
 .avatar span:nth-child(2){animation-delay:-.3s}
@@ -120,7 +125,9 @@ canvas{
 .avatar span:nth-child(6){animation-delay:-1.5s}
 
 @keyframes orbit{
-  from{transform:rotate(0deg) translateX(85px)}
+  from{transform:rotate(0deg) translate(-50%, -50%) translateX(90px)}
+  to{transform:rotate(360deg) translate(-50%, -50%) translateX(90px)}
+}
   to{transform:rotate(360deg) translateX(85px)}
 }
 
