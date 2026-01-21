@@ -45,8 +45,47 @@
     h1 {
       font-size: 4rem;
       letter-spacing: 4px;
-      text-shadow: 0 0 20px cyan;
-      animation: glow 2s infinite alternate;
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      color: cyan;
+      background: transparent;
+      overflow: hidden;
+      clip-path: inset(0 0 0 0);
+    }
+
+    .glitch::before {
+      animation: glitchTop 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      color: magenta;
+      animation: glitchBottom 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchTop {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, -2px); }
+      40% { transform: translate(-2px, 2px); }
+      60% { transform: translate(2px, -1px); }
+      80% { transform: translate(2px, 1px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { transform: translate(0); }
+      20% { transform: translate(2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, 1px); }
+      80% { transform: translate(-2px, -1px); }
+      100% { transform: translate(0); }
     }
     @keyframes glow {
       from { text-shadow: 0 0 10px cyan; }
@@ -80,20 +119,25 @@
 
     .particle {
       position: absolute;
-      width: 6px;
-      height: 6px;
-      background: cyan;
-      border-radius: 50%;
-      box-shadow: 0 0 10px cyan;
-      animation: orbit 4s linear infinite;
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(45deg, cyan, magenta);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      box-shadow: 0 0 15px cyan;
+      animation: orbit 2s linear infinite;
     }
 
-    .particle:nth-child(2) { animation-delay: -1s; }
-    .particle:nth-child(3) { animation-delay: -2s; }
-    .particle:nth-child(4) { animation-delay: -3s; }
+    .particle:nth-child(1) { animation-delay: 0s; }
+    .particle:nth-child(2) { animation-delay: -0.3s; }
+    .particle:nth-child(3) { animation-delay: -0.6s; }
+    .particle:nth-child(4) { animation-delay: -0.9s; }
+    .particle:nth-child(5) { animation-delay: -1.2s; }
+    .particle:nth-child(6) { animation-delay: -1.5s; }
 
     @keyframes orbit {
-      from { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+      from { transform: rotate(0deg) translateX(95px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(95px) rotate(-360deg); }
+    }
       to { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
     }
 
@@ -150,15 +194,17 @@
       <span class="particle"></span>
       <span class="particle"></span>
       <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
       <img src="avatar.png" alt="DEEBOOK" />
     </div>
-    <h1>DEEBOOK</h1>
+    <h1 class="glitch" data-text="DEEBOOK">DEEBOOK</h1>
     <div class="subtitle">GAMER | DIGITAL PROFILE</div>
 
-    <div class="socials">
-      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
-      <a href="https://steamcommunity.com" target="_blank"><i class="fab fa-steam"></i></a>
+    <div class="socials" onmouseover="startMusic()">
+      <a href="https://facebook.com" target="_blank" onclick="playClick()"><i class="fab fa-facebook"></i></a>
+      <a href="#" onclick="copyDiscord(); playClick()"><i class="fab fa-discord"></i></a>
+      <a href="https://steamcommunity.com" target="_blank" onclick="playClick()"><i class="fab fa-steam"></i></a>
     </div>
   </div>
 
@@ -172,6 +218,14 @@
   <script>
     const bgm = document.getElementById('bgm');
     let playing = false;
+
+    function startMusic() {
+      if (!playing) {
+        bgm.play();
+        playing = true;
+      }
+    }
+
     function toggleMusic() {
       if (!playing) {
         bgm.play();
@@ -181,6 +235,21 @@
         playing = false;
       }
     }
+
+    function copyDiscord() {
+      navigator.clipboard.writeText('DEEBOOK#0000');
+      alert('คัดลอก Discord ID แล้ว!');
+    }
+
+    // Mouse trail effect
+    document.addEventListener('mousemove', e => {
+      const dot = document.createElement('div');
+      dot.className = 'mouse-dot';
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 500);
+    });
   </script>
 
 </body>
